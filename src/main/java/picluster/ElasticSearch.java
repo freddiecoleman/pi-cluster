@@ -34,7 +34,7 @@ public class ElasticSearch {
 
     }
 
-    public List<String> allIndices(){
+    public String[] allIndices(){
 
         List<String> allIndices = new ArrayList<String>();
 
@@ -64,7 +64,7 @@ public class ElasticSearch {
 
         }
 
-        return allIndices;
+        return allIndices.toArray(new String[allIndices.size()]);
 
     }
 

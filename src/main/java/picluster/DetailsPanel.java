@@ -6,11 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
 public class DetailsPanel extends JPanel {
@@ -20,27 +16,25 @@ public class DetailsPanel extends JPanel {
     private EventListenerList listenerList = new EventListenerList();
 
     public DetailsPanel() {
+
+        ElasticSearch search = new ElasticSearch("pi-cluster");
+
         Dimension size = getPreferredSize();
         size.width = 250;
         setPreferredSize(size);
 
-        setBorder(BorderFactory.createTitledBorder("Personal Details"));
+        setBorder(BorderFactory.createTitledBorder("Filter"));
 
-        JLabel nameLabel = new JLabel("Name: ");
-        JLabel occupationLabel = new JLabel("Occupation: ");
+        JLabel indexLabel = new JLabel("Index: ");
 
-        final JTextField nameField = new JTextField(10);
-        final JTextField occupationField = new JTextField(10);
+        final JComboBox indexComboBox = new JComboBox(search.allIndices());
 
         JButton addBtn = new JButton("Add");
 
         addBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                String name = nameField.getText();
-                String occupation = occupationField.getText();
-
-                String text = name + ":  " + occupation + "\n";
+                String text = "test";
 
                 fireDetailEvent(new DetailEvent(this, text));
             }
@@ -58,29 +52,21 @@ public class DetailsPanel extends JPanel {
 
         gc.gridx = 0;
         gc.gridy = 0;
-        add(nameLabel, gc);
-
-        gc.gridx = 0;
-        gc.gridy = 1;
-        add(occupationLabel, gc);
+        add(indexLabel, gc);
 
         // // Second column
         gc.anchor = GridBagConstraints.LINE_START;
 
         gc.gridx = 1;
         gc.gridy = 0;
-        add(nameField, gc);
-
-        gc.gridx = 1;
-        gc.gridy = 1;
-        add(occupationField, gc);
+        add(indexComboBox, gc);
 
         // Final row
         gc.weighty = 10;
 
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         gc.gridx = 1;
-        gc.gridy = 2;
+        gc.gridy = 3;
         add(addBtn, gc);
     }
 
