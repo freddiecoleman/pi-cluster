@@ -29,6 +29,7 @@ public class ElasticSearch {
 
     private Settings settings;
     private Client client;
+    private long resultCount;
 
     public ElasticSearch(String clusterName) { // cluster name = "pi-cluster"
 
@@ -133,8 +134,14 @@ public class ElasticSearch {
             }
         }
 
+        resultCount = scrollResp.getHits().getTotalHits();
+
         return results;
 
+    }
+
+    public long getResultCount(){
+        return resultCount;
     }
 
 

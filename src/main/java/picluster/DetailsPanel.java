@@ -33,7 +33,7 @@ public class DetailsPanel extends JPanel {
         searchBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                fireSearchEvent(new SearchEvent(this, searchText.getText()));
+                fireSearchEvent(new SearchEvent(this, searchText.getText(), new ElasticSearch("pi-cluster")));
             }
 
         });

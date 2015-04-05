@@ -9,14 +9,19 @@ public class SearchEvent extends EventObject {
     ElasticSearch elasticSearch;
     String query;
 
-    public SearchEvent(Object source, String query) {
+    public SearchEvent(Object source, String query, ElasticSearch elasticSearch) {
         super(source);
         this.query = query;
-        this.elasticSearch = new ElasticSearch("pi-cluster");
+        this.elasticSearch = elasticSearch;
     }
 
     public ArrayList<HashMap<String, String>> search() {
         return elasticSearch.search(query);
 
+    }
+
+    public long getResultCount()
+    {
+        return elasticSearch.getResultCount();
     }
 }

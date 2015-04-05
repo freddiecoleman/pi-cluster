@@ -10,7 +10,7 @@ public class App {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new MainFrame("Shakespeare Pi Cluster!");
-                frame.setSize(500, 400);
+                frame.setSize(1200, 700);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
             }

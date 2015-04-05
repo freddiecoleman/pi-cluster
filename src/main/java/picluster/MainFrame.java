@@ -53,6 +53,8 @@ public class MainFrame extends JFrame {
 
                 }
 
+                System.out.println(event.getResultCount());
+
             }
         });
 
