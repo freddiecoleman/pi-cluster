@@ -1,6 +1,8 @@
 package picluster;
 
+import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.HashMap;
 
 public class DetailEvent extends EventObject {
 
@@ -12,12 +14,11 @@ public class DetailEvent extends EventObject {
         this.text = text;
     }
 
-    public String getText() {
+    public ArrayList<HashMap<String, String>> getText() {
 
-        ElasticSearch search = new ElasticSearch("pi-cluster");
+        ElasticSearch elasticSearch = new ElasticSearch("pi-cluster");
 
-        search.search("kill");
+        return elasticSearch.search("kill");
 
-        return text;
     }
 }

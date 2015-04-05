@@ -18,10 +18,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.SimpleQueryParser;
 import org.elasticsearch.search.SearchHit;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.EventObject;
-import java.util.List;
+import java.util.*;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
@@ -103,7 +100,9 @@ public class ElasticSearch {
 
     }
 
-    public void search(String query){
+    public ArrayList<HashMap<String, String>> search(String query){
+
+        ArrayList<HashMap<String, String>> results = new ArrayList<HashMap<String, String>>();
 
         SearchResponse scrollResp = client.prepareSearch()
                 .setSearchType(SearchType.SCAN)
@@ -116,13 +115,17 @@ public class ElasticSearch {
 
             for (SearchHit hit : scrollResp.getHits().getHits()) {
 
-                String playName = hit.getSource().get("play_name").toString();
-                String speechNumber = hit.getSource().get("speech_number").toString();
-                String speaker = hit.getSource().get("speaker").toString();
-                String text = hit.getSource().get("text_entry").toString();
+                HashMap<String, String> result = new HashMap<String, String>();
 
-                System.out.println(playName);
+                result.put("play_name", hit.getSource().get("play_name").toString());
+                result.put("speech_number", hit.getSource().get("speech_number").toString());
+                result.put("speaker", hit.getSource().get("speaker").toString());
+                result.put("line_number", hit.getSource().get("line_number").toString());
+                result.put("text_entry", hit.getSource().get("text_entry").toString());
+
+                results.add(result);
             }
+
             scrollResp = client.prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(600000)).execute().actionGet();
             //Break condition: No hits are returned
             if (scrollResp.getHits().getHits().length == 0) {
@@ -130,20 +133,7 @@ public class ElasticSearch {
             }
         }
 
-//        SearchResponse response = client.prepareSearch()
-//                .setSearchType(SearchType.QUERY_THEN_FETCH)
-//                .setQuery(QueryBuilders.multiMatchQuery(query, "_all"))
-//                .execute()
-//                .actionGet();
-//
-//
-//        //System.out.println(response.getHits());
-//
-//        for (SearchHit hit : response.getHits()) {
-//            System.out.println(hit);
-//        }
-//
-//        //System.out.println(response);
+        return results;
 
     }
 
