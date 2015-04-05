@@ -115,7 +115,13 @@ public class ElasticSearch {
         while (true) {
 
             for (SearchHit hit : scrollResp.getHits().getHits()) {
-                System.out.println(hit.getSource().get("play_name"));
+
+                String playName = hit.getSource().get("play_name").toString();
+                String speechNumber = hit.getSource().get("speech_number").toString();
+                String speaker = hit.getSource().get("speaker").toString();
+                String text = hit.getSource().get("text_entry").toString();
+
+                System.out.println(playName);
             }
             scrollResp = client.prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(600000)).execute().actionGet();
             //Break condition: No hits are returned
