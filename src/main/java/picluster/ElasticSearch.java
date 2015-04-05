@@ -13,8 +13,10 @@ import org.elasticsearch.common.hppc.ObjectLookupContainer;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.SimpleQueryParser;
+import org.elasticsearch.search.SearchHit;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -103,13 +105,39 @@ public class ElasticSearch {
 
     public void search(String query){
 
-        SearchResponse response = client.prepareSearch()
-                .setSearchType(SearchType.QUERY_THEN_FETCH)
+        SearchResponse scrollResp = client.prepareSearch()
+                .setSearchType(SearchType.SCAN)
+                .setScroll(new TimeValue(60000))
                 .setQuery(QueryBuilders.multiMatchQuery(query, "_all"))
-                .execute()
-                .actionGet();
+                .setSize(100).execute().actionGet(); //100 hits per shard will be returned for each scroll
 
-        System.out.println(response);
+        //Scroll until no hits are returned
+        while (true) {
+
+            for (SearchHit hit : scrollResp.getHits().getHits()) {
+                System.out.println(hit.getSource().get("play_name"));
+            }
+            scrollResp = client.prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(600000)).execute().actionGet();
+            //Break condition: No hits are returned
+            if (scrollResp.getHits().getHits().length == 0) {
+                break;
+            }
+        }
+
+//        SearchResponse response = client.prepareSearch()
+//                .setSearchType(SearchType.QUERY_THEN_FETCH)
+//                .setQuery(QueryBuilders.multiMatchQuery(query, "_all"))
+//                .execute()
+//                .actionGet();
+//
+//
+//        //System.out.println(response.getHits());
+//
+//        for (SearchHit hit : response.getHits()) {
+//            System.out.println(hit);
+//        }
+//
+//        //System.out.println(response);
 
     }
 
