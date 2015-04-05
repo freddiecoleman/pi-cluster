@@ -16,7 +16,7 @@ public class DetailEvent extends EventObject {
 
         ElasticSearch search = new ElasticSearch("pi-cluster");
 
-        System.out.println(search.allIndices());
+        search.search("kill");
 
         return text;
     }

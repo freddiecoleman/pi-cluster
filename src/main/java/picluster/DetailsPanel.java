@@ -26,6 +26,7 @@ public class DetailsPanel extends JPanel {
         setBorder(BorderFactory.createTitledBorder("Filter"));
 
         JLabel indexLabel = new JLabel("Index: ");
+        JLabel typeLabel = new JLabel("Type: ");
 
         final JComboBox indexComboBox = new JComboBox(search.allIndices());
 

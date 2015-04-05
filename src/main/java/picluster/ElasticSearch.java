@@ -3,13 +3,17 @@ package picluster;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesResponse;
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.hppc.ObjectLookupContainer;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.SimpleQueryParser;
 
 import java.util.ArrayList;
@@ -96,4 +100,18 @@ public class ElasticSearch {
         return false;
 
     }
+
+    public void search(String query){
+
+        SearchResponse response = client.prepareSearch()
+                .setSearchType(SearchType.QUERY_THEN_FETCH)
+                .setQuery(QueryBuilders.multiMatchQuery(query, "_all"))
+                .execute()
+                .actionGet();
+
+        System.out.println(response);
+
+    }
+
+
 }
