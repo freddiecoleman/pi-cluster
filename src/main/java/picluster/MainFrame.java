@@ -55,8 +55,7 @@ public class MainFrame extends JFrame {
 
                 final JDialog resultsDialog = new AndroidLikeToast(MainFrame.this, true, event.getResultCount() + " results!");
                 Timer timer = new Timer(1000, new ActionListener() {
-
-                    @Override
+                    
                     public void actionPerformed(ActionEvent e) {
                         resultsDialog.setVisible(false);
                         resultsDialog.dispose();
