@@ -1,3 +1,5 @@
 ## Pi Cluster
 
-I have built an Elasticsearch cluster of Raspberry Pis. This Java application uses the Elasticsearch API to manage the data on the cluster.
+I have built an Elasticsearch cluster of Raspberry Pis that contains the complete works of Shakespeare.
+
+This Java application uses the Elasticsearch Java API to allow the user to search all of Shakespears work.
