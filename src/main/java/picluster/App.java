@@ -12,6 +12,7 @@ public class App {
                 JFrame frame = new MainFrame("Shakespeare Pi Cluster!");
                 frame.setSize(1200, 700);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }
         });
