@@ -30,8 +30,6 @@ public class MainFrame extends JFrame {
         model.addColumn("Line");
         model.addColumn("Text");
 
-
-
         JScrollPane scrollPane = new JScrollPane(resultsTable);
 
         detailsPanel = new DetailsPanel();
@@ -39,6 +37,8 @@ public class MainFrame extends JFrame {
         detailsPanel.addDetailListener(new DetailListener() {
             public void detailEventOccurred(DetailEvent event) {
                 ArrayList<HashMap<String, String>> results = event.getText();
+
+                model.setRowCount(0);
 
                 for(HashMap<String, String> row : results){
 
