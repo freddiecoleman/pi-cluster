@@ -25,20 +25,17 @@ public class DetailsPanel extends JPanel {
 
         setBorder(BorderFactory.createTitledBorder("Filter"));
 
-        JLabel indexLabel = new JLabel("Index: ");
-        JLabel typeLabel = new JLabel("Type: ");
+        JLabel indexLabel = new JLabel("Search: ");
+        final JTextField searchText = new JTextField(10);
 
-        final JComboBox indexComboBox = new JComboBox(search.allIndices());
+        JButton searchBtn = new JButton("Search");
 
-        JButton addBtn = new JButton("Add");
-
-        addBtn.addActionListener(new ActionListener() {
+        searchBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                String text = "test";
-
-                fireDetailEvent(new DetailEvent(this, text));
+                fireSearchEvent(new SearchEvent(this, searchText.getText()));
             }
+
         });
 
         setLayout(new GridBagLayout());
@@ -60,7 +57,7 @@ public class DetailsPanel extends JPanel {
 
         gc.gridx = 1;
         gc.gridy = 0;
-        add(indexComboBox, gc);
+        add(searchText, gc);
 
         // Final row
         gc.weighty = 10;
@@ -68,24 +65,24 @@ public class DetailsPanel extends JPanel {
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         gc.gridx = 1;
         gc.gridy = 3;
-        add(addBtn, gc);
+        add(searchBtn, gc);
     }
 
-    public void fireDetailEvent(DetailEvent event) {
+    public void fireSearchEvent(SearchEvent event) {
         Object[] listeners = listenerList.getListenerList();
 
         for(int i=0; i < listeners.length; i += 2) {
-            if(listeners[i] == DetailListener.class) {
-                ((DetailListener)listeners[i+1]).detailEventOccurred(event);
+            if(listeners[i] == SearchListener.class) {
+                ((SearchListener)listeners[i+1]).detailEventOccurred(event);
             }
         }
     }
 
-    public void addDetailListener(DetailListener listener) {
-        listenerList.add(DetailListener.class, listener);
+    public void addSearchListener(SearchListener listener) {
+        listenerList.add(SearchListener.class, listener);
     }
 
-    public void removeDetailListener(DetailListener listener) {
-        listenerList.remove(DetailListener.class, listener);
+    public void removeSearchListener(SearchListener listener) {
+        listenerList.remove(SearchListener.class, listener);
     }
 }

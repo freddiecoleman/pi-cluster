@@ -34,18 +34,24 @@ public class MainFrame extends JFrame {
 
         detailsPanel = new DetailsPanel();
 
-        detailsPanel.addDetailListener(new DetailListener() {
-            public void detailEventOccurred(DetailEvent event) {
-                ArrayList<HashMap<String, String>> results = event.getText();
+        detailsPanel.addSearchListener(new SearchListener() {
+            public void detailEventOccurred(SearchEvent event) {
+
+                ArrayList<HashMap<String, String>> results = event.search();
 
                 model.setRowCount(0);
 
-                for(HashMap<String, String> row : results){
+                for (HashMap<String, String> row : results) {
 
-                    model.addRow(new Object[]{row.get("play_name"), row.get("speech_number"), row.get("speaker"), row.get("line_number"), row.get("text_entry")});
+                    model.addRow(new Object[]{
+                            row.get("play_name"),
+                            row.get("speech_number"),
+                            row.get("speaker"),
+                            row.get("line_number"),
+                            row.get("text_entry")
+                    });
 
                 }
-
 
             }
         });
