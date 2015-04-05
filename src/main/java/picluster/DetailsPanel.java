@@ -21,11 +21,12 @@ public class DetailsPanel extends JPanel {
 
         Dimension size = getPreferredSize();
         size.width = 250;
+        size.height = 100;
         setPreferredSize(size);
 
-        setBorder(BorderFactory.createTitledBorder("Filter"));
+        setBorder(BorderFactory.createTitledBorder("Search"));
 
-        JLabel indexLabel = new JLabel("Search: ");
+        JLabel indexLabel = new JLabel("Query: ");
         final JTextField searchText = new JTextField(10);
 
         JButton searchBtn = new JButton("Search");
@@ -60,7 +61,7 @@ public class DetailsPanel extends JPanel {
         add(searchText, gc);
 
         // Final row
-        gc.weighty = 10;
+        gc.weighty = 1;
 
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         gc.gridx = 1;

@@ -53,7 +53,19 @@ public class MainFrame extends JFrame {
 
                 }
 
-                System.out.println(event.getResultCount());
+                final JDialog resultsDialog = new AndroidLikeToast(MainFrame.this, true, event.getResultCount() + " results!");
+                Timer timer = new Timer(1000, new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        resultsDialog.setVisible(false);
+                        resultsDialog.dispose();
+                    }
+                });
+                timer.setRepeats(false);
+                timer.start();
+
+                resultsDialog.setVisible(true); // if modal, application will pause here
 
             }
         });
@@ -61,7 +73,7 @@ public class MainFrame extends JFrame {
         // Add Swing components to content pane
         Container c = getContentPane();
 
-        c.add(scrollPane, BorderLayout.CENTER);
-        c.add(detailsPanel, BorderLayout.WEST);
+        c.add(scrollPane, BorderLayout.SOUTH);
+        c.add(detailsPanel, BorderLayout.NORTH);
     }
 }
