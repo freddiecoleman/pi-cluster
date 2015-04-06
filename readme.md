@@ -1,6 +1,6 @@
 ## Pi Cluster
 
-I have built an Elasticsearch cluster of Raspberry Pis that contains the complete works of Shakespeare.
+Over the easter bank holiday weekend I built an Elasticsearch cluster of Raspberry Pis that contains the complete works of Shakespeare.
 
 ![Pi Cluster!](https://freddiecoleman.com/content/images/2015/04/DSC_0280.JPG)
 
