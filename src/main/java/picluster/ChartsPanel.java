@@ -1,5 +1,7 @@
 package picluster;
 
+import org.jfree.chart.ChartPanel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +33,11 @@ public class ChartsPanel extends JPanel {
 
         GridBagConstraints gc = new GridBagConstraints();
 
+        JFreeChartBarChartExample chart = new JFreeChartBarChartExample("Browser Usage Statistics", "Which Browser are you using?");
+        chart.pack();
+        chart.setVisible(true);
+
+
         // // First column /////////////////////////
 
         gc.anchor = GridBagConstraints.CENTER;
@@ -40,6 +47,8 @@ public class ChartsPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 0;
         add(defaultLabel, gc);
+
+
     }
 
     public void fireSearchEvent(SearchEvent event) {
