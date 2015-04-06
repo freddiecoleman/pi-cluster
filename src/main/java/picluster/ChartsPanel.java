@@ -38,12 +38,11 @@ public class ChartsPanel extends JPanel {
 
         setLayout(new BorderLayout());
 
+        add(createPlayBarChart("Occurences by play"), BorderLayout.CENTER);
+        
+    }
 
-
-
-
-
-        String chartTitle = "test";
+    private ChartPanel createPlayBarChart(String chartTitle){
 
         // based on the dataset we create the chart
         JFreeChart pieChart = ChartFactory.createBarChart(chartTitle, "Category", "Score", createDataset(), PlotOrientation.VERTICAL, true, true, false);
@@ -54,15 +53,7 @@ public class ChartsPanel extends JPanel {
         // settind default size
         chartPanel.setSize(this.getSize());
 
-
-
-
-        // // First column /////////////////////////
-
-
-        add(chartPanel, BorderLayout.CENTER);
-
-
+        return chartPanel;
     }
 
     public void fireSearchEvent(SearchEvent event) {
