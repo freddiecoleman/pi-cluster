@@ -30,16 +30,14 @@ public class ChartsPanel extends JPanel {
         setPreferredSize(size);
 
         setBorder(BorderFactory.createTitledBorder("Charts"));
-
-
-
+        
         JLabel defaultLabel = new JLabel("Search for something to see some charts!");
         defaultLabel.setForeground(Color.lightGray);
 
         setLayout(new BorderLayout());
 
         add(createPlayBarChart("Occurences by play"), BorderLayout.CENTER);
-        
+
     }
 
     private ChartPanel createPlayBarChart(String chartTitle){
