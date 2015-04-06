@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 public class MainFrame extends JFrame {
 
     private DetailsPanel detailsPanel;
+    private ChartsPanel chartsPanel;
 
     public MainFrame(String title) {
         super(title);
@@ -33,6 +34,7 @@ public class MainFrame extends JFrame {
         JScrollPane scrollPane = new JScrollPane(resultsTable);
 
         detailsPanel = new DetailsPanel();
+        chartsPanel = new ChartsPanel();
 
         detailsPanel.addSearchListener(new SearchListener() {
             public void detailEventOccurred(SearchEvent event) {
@@ -74,5 +76,6 @@ public class MainFrame extends JFrame {
 
         c.add(scrollPane, BorderLayout.SOUTH);
         c.add(detailsPanel, BorderLayout.NORTH);
+        c.add(chartsPanel, BorderLayout.CENTER);
     }
 }
