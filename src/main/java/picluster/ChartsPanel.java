@@ -10,6 +10,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
@@ -30,20 +34,24 @@ public class ChartsPanel extends JPanel {
         setPreferredSize(size);
 
         setBorder(BorderFactory.createTitledBorder("Charts"));
-        
+
         JLabel defaultLabel = new JLabel("Search for something to see some charts!");
         defaultLabel.setForeground(Color.lightGray);
 
         setLayout(new BorderLayout());
 
-        add(createPlayBarChart("Occurences by play"), BorderLayout.CENTER);
-
     }
 
-    private ChartPanel createPlayBarChart(String chartTitle){
+    public void updateChart(ArrayList<HashMap<String, String>> searchResults){
+        add(createPlayBarChart("Occurences by play", searchResults), BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    private ChartPanel createPlayBarChart(String chartTitle, ArrayList<HashMap<String, String>> searchResults){
 
         // based on the dataset we create the chart
-        JFreeChart pieChart = ChartFactory.createBarChart(chartTitle, "Category", "Score", createDataset(), PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart pieChart = ChartFactory.createBarChart(chartTitle, "Play", "Count", createDataset(searchResults), PlotOrientation.VERTICAL, true, true, false);
 
         // Adding chart into a chart panel
         ChartPanel chartPanel = new ChartPanel(pieChart);
@@ -72,40 +80,29 @@ public class ChartsPanel extends JPanel {
         listenerList.remove(SearchListener.class, listener);
     }
 
-    private CategoryDataset createDataset() {
+    private CategoryDataset createDataset(ArrayList<HashMap<String, String>> searchResults) {
 
-        // row keys...
-        final String firefox = "Firefox";
-        final String chrome = "Chrome";
-        final String iexplorer = "InternetExplorer";
+        HashMap<String, Integer> data = new HashMap<String, Integer>();
 
-        // column keys...
-        final String speed = "Speed";
-        final String popular = "Popular";
-        final String response = "Response";
-        final String osindependent = "OS Independent";
-        final String features = "Features";
+        for (HashMap<String, String> row : searchResults) {
+
+            if(data.get(row.get("play_name")) == null){ // first time word encountered in this play
+
+                data.put(row.get("play_name"), 1);
+                continue;
+
+            }
+
+            data.put(row.get("play_name"), data.get(row.get("play_name")) + 1); // increment word count
+
+        }
 
         // create the dataset...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        dataset.addValue(1.0, firefox, speed);
-        dataset.addValue(4.0, firefox, popular);
-        dataset.addValue(3.0, firefox, response);
-        dataset.addValue(5.0, firefox, osindependent);
-        dataset.addValue(5.0, firefox, features);
-
-        dataset.addValue(5.0, chrome, speed);
-        dataset.addValue(7.0, chrome, popular);
-        dataset.addValue(6.0, chrome, response);
-        dataset.addValue(8.0, chrome, osindependent);
-        dataset.addValue(4.0, chrome, features);
-
-        dataset.addValue(4.0, iexplorer, speed);
-        dataset.addValue(3.0, iexplorer, popular);
-        dataset.addValue(2.0, iexplorer, response);
-        dataset.addValue(3.0, iexplorer, osindependent);
-        dataset.addValue(6.0, iexplorer, features);
+        for(Map.Entry<String, Integer> entry : data.entrySet()){
+            dataset.addValue(entry.getValue(), "Count", entry.getKey());
+        }
 
         return dataset;
 

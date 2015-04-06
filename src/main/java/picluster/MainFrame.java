@@ -41,6 +41,8 @@ public class MainFrame extends JFrame {
 
                 ArrayList<HashMap<String, String>> results = event.search();
 
+                chartsPanel.updateChart(results);
+
                 model.setRowCount(0);
 
                 for (HashMap<String, String> row : results) {
